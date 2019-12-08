@@ -10,8 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
+    $count = DB::table('users')->count();
+    dump(['Hello', 11, $count]);
     //phpinfo();
     //exit();
     return view('welcome');
