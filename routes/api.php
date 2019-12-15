@@ -23,3 +23,13 @@ Route::get('projects/{id}', 'ProjectController@show');
 Route::put('projects/{project}', 'ProjectController@markAsCompleted');
 Route::post('tasks', 'TaskController@store');
 Route::put('tasks/{task}', 'TaskController@markAsCompleted');
+
+
+Route::post('register', 'UserController@register');
+Route::post('login', 'UserController@authenticate');
+Route::get('open', 'DataController@open');
+
+Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::get('user', 'UserController@getAuthenticatedUser');
+    Route::get('closed', 'DataController@closed');
+});

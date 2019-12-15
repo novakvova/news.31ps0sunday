@@ -20,19 +20,19 @@ class App extends Component {
         console.log("Hello", this.state);
         return (
             <BrowserRouter>
-                    <NavHeader />
+                <NavHeader />
 
-                    <Route exact path="/">
-                        <Home />
-                    </Route>
+                <Route exact path="/">
+                    <Home />
+                </Route>
 
-                    <Route exact path="/login">
-                        <Login />
-                    </Route>
+                <Route exact path="/login">
+                    <Login />
+                </Route>
 
-                    <Route exact path="/register">
-                        <Register />
-                    </Route>
+                <Route exact path="/register">
+                    <Register />
+                </Route>
             </BrowserRouter>
         );
     }
