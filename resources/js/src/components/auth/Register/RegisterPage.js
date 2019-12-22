@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TextFieldGroup from '../../common/TextFieldGroup';
 // import FileFieldGroup from '../../common/FileFieldGroup';
 import ImageFieldGroupCropper from "../../common/ImageFieldGroupCropper";
+import axios from 'axios';
 
 export class RegisterPage extends Component {
     state = {
@@ -35,16 +36,34 @@ export class RegisterPage extends Component {
     handleSubmit = e => {
         e.preventDefault();
         console.log("--register submit--");
-        const { email, image } = this.state;
+        const { email, photo, password } = this.state;
         let errors = {};
 
         if (email === "") errors.email = "Поле не може бути пустим!";
-        if (image === "") errors.image = "Закинь фотку!";
+        if (photo === "") errors.photo = "Закинь фотку!";
 
         const isValid = Object.keys(errors).length === 0;
 
         if (isValid) {
             console.log("Model is Valid");
+            const model = {
+                email: email,
+                name: 'SEMEN',
+                password: password
+            };
+            //const self=this;
+            axios.post('/api/register',model)
+                .then(resp=> {
+                    console.log('------result good---------', resp);
+                },
+                error=> {
+                    throw error.response.data;
+                })
+                .catch(err => {
+                    this.setState({
+                        errors: err
+                    });
+                });
             //ajax axios post
         } else {
             this.setState({ errors });
@@ -93,15 +112,6 @@ export class RegisterPage extends Component {
                         error={errors.photo}
                         photo={photo}
                     />
-
-                    {/* <FileFieldGroup
-                        field="image"
-                        label="Оберіть фото"
-                        value={image}
-                        error={errors.image}
-                        onChange={this.handleChange}
-                        type="file"
-                    /> */}
 
                     <TextFieldGroup
                         field="password"

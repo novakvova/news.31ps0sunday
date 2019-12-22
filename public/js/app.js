@@ -75461,6 +75461,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _common_TextFieldGroup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/TextFieldGroup */ "./resources/js/src/components/common/TextFieldGroup.js");
 /* harmony import */ var _common_ImageFieldGroupCropper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/ImageFieldGroupCropper */ "./resources/js/src/components/common/ImageFieldGroupCropper.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -75483,6 +75485,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
  // import FileFieldGroup from '../../common/FileFieldGroup';
+
 
 
 var RegisterPage =
@@ -75535,14 +75538,30 @@ function (_Component) {
       console.log("--register submit--");
       var _this$state = _this.state,
           email = _this$state.email,
-          image = _this$state.image;
+          photo = _this$state.photo,
+          password = _this$state.password;
       var errors = {};
       if (email === "") errors.email = "Поле не може бути пустим!";
-      if (image === "") errors.image = "Закинь фотку!";
+      if (photo === "") errors.photo = "Закинь фотку!";
       var isValid = Object.keys(errors).length === 0;
 
       if (isValid) {
-        console.log("Model is Valid"); //ajax axios post
+        console.log("Model is Valid");
+        var model = {
+          email: email,
+          name: 'SEMEN',
+          password: password
+        }; //const self=this;
+
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/register', model).then(function (resp) {
+          console.log('------result good---------', resp);
+        }, function (error) {
+          throw error.response.data;
+        })["catch"](function (err) {
+          _this.setState({
+            errors: err
+          });
+        }); //ajax axios post
       } else {
         _this.setState({
           errors: errors

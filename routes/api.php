@@ -25,8 +25,12 @@ Route::post('tasks', 'TaskController@store');
 Route::put('tasks/{task}', 'TaskController@markAsCompleted');
 
 
-Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@authenticate');
+Route::post('register', 'AuthController@register');
+Route::post('login', 'AuthController@login');
+Route::get('logout', 'AuthController@logout');
+Route::get('user', 'AuthController@getAuthUser');
+// Route::post('register', 'UserController@register');
+// Route::post('login', 'UserController@authenticate');
 Route::get('open', 'DataController@open');
 
 Route::group(['middleware' => ['jwt.verify']], function () {
