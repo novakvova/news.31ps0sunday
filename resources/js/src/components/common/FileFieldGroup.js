@@ -26,7 +26,7 @@ const FileFieldGroup = ({
             />
 
             <label className="custom-file-label" htmlFor={field}>
-                Оберіть ваше фото...
+                {label}
             </label>
             {!!error && <div className="invalid-feedback">{error}</div>}
         </div>
@@ -44,7 +44,7 @@ FileFieldGroup.propTypes = {
 };
 
 FileFieldGroup.defaultProps = {
-    type: "file"
+    type: "file",
 };
 
 export default FileFieldGroup;

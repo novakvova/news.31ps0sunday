@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import TextFieldGroup from '../../common/TextFieldGroup';
-import FileFieldGroup from '../../common/FileFieldGroup';
+// import FileFieldGroup from '../../common/FileFieldGroup';
+import ImageFieldGroupCropper from "../../common/ImageFieldGroupCropper";
 
 export class RegisterPage extends Component {
     state = {
         email: '',
         phone: '',
-        image: '',
+        photo: '',
         password: '',
         passwordConfirm: '',
         errors: {
@@ -50,12 +51,25 @@ export class RegisterPage extends Component {
         }
     };
 
+     getCroppedImage = img => {
+        if (!!this.state.errors["photo"]) {
+            let errors = Object.assign({}, this.state.errors);
+            delete errors["photo"];
+            this.setState({
+                photo: img,
+                errors
+            });
+        } else {
+            this.setState({ photo: img });
+        }
+    };
+
     render() {
-        const { email, phone, image, password, passwordConfirm, errors } = this.state;
+        const { email, phone, photo, password, passwordConfirm, errors } = this.state;
         console.log("Regiter page state", this.state);
         return (
             <div className="container">
-                <h1 className="d-flex justify-content-center">Реєстрація</h1>
+                <h1 className="d-flex justify-content-center">Реєстрація eee</h1>
 
                 <form name="form" onSubmit={this.handleSubmit}>
                     <TextFieldGroup
@@ -74,14 +88,20 @@ export class RegisterPage extends Component {
                         onChange={this.handleChange}
                     />
 
-                    <FileFieldGroup
+                    <ImageFieldGroupCropper
+                        getCroppedImage={this.getCroppedImage}
+                        error={errors.photo}
+                        photo={photo}
+                    />
+
+                    {/* <FileFieldGroup
                         field="image"
                         label="Оберіть фото"
                         value={image}
                         error={errors.image}
                         onChange={this.handleChange}
                         type="file"
-                    />
+                    /> */}
 
                     <TextFieldGroup
                         field="password"
